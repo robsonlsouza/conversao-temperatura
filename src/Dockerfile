@@ -3,7 +3,7 @@ FROM node:14.17.5
 # Criação e definição do diretório de instalação
 WORKDIR /app
 # Copiando os arquivos de instalação
-COPY src/package*.json ./
+COPY package*.json ./
 # Instalando as dependências do projeto
 RUN npm install
 # Copiando os aquivos
