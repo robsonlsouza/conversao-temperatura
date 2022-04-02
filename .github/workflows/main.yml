@@ -30,22 +30,22 @@ jobs:
           tags: |
             robsonlsouza/conversao-temperatura:latest
             robsonlsouza/conversao-temperatura:${{ github.run_number }}
-  CD:
-    needs: [CI]
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v2
-      
-      - name: Kubernetes set context
-        uses: Azure/k8s-set-context@v2
-        with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.K8S_KUBECONFIG }}
 
-      - name: Deploy to kubernetes cluster
-        uses: Azure/k8s-deploy@v1.5
-        with:
-          image: robsonlsouza/conversao-temperatura:${{ github.run_number }}
-          manifests: |
-            k8s/Deployment.yaml
+  CD:
+   needs: [CI]
+   runs-on: ubuntu-latest
+   
+   steps:
+    - uses: actions/checkout@v2
+    - name: Kubernetes Set Context
+      uses: Azure/k8s-set-context@v2
+      with:
+       method: kubeconfig
+       kubeconfig: ${{ secrets.K8S_KUBECONFIG }}
+       
+    - name: Deploy to Kubernetes cluster
+      uses: Azure/k8s-deploy@v1.5
+      with:
+       images: robsonlsouza/conversao-temperatura:${{ github.run_number }}
+       manifests: |
+         k8s/Deployment.yaml
